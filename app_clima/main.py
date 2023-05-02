@@ -10,14 +10,6 @@ import pytz
 import pycountry_convert as pc
 import json
 
-echo "# app-de-clima" >> README.md
-git init
-git add README.md
-git commit -m "first commit"
-git branch -M main
-git remote add origin https://github.com/kinkoof/app-de-clima.git
-git push -u origin main
-
 ################# cores ###############
 co0 = "#444466"  # Preta
 co1 = "#feffff"  # branca
@@ -54,7 +46,7 @@ def info():
     weather_key = '74db8d03761c1e007553ccbc6d73fe92'
     cidade = e_local.get()
     api_link = "https://api.openweathermap.org/data/2.5/weather?q=" + \
-cidade+"&appid=" + weather_key+"&lang=pt" + "&units=metric"
+        cidade+"&appid=" + weather_key+"&lang=pt" + "&units=metric"
 
     # HTTP request
     r = requests.get(api_link)
@@ -76,7 +68,7 @@ cidade+"&appid=" + weather_key+"&lang=pt" + "&units=metric"
 
     # ---
     tempo = data["main"]["temp"]
-    velocidade = data["wind"]["speed"]
+
     descricao = data["weather"][0]["description"]
 
     # Mudando informaoes
@@ -95,9 +87,8 @@ cidade+"&appid=" + weather_key+"&lang=pt" + "&units=metric"
 
     l_data['text'] = zona_horas
 
-    l_temp['text'] = tempo
-
-    l_velocidade['text'] = "velocidade do vento : " + str(velocidade)
+    l_temp['text'] = round(tempo)
+    l_temp_celcius['text'] = 'ºC'
 
     l_descricao['text'] = descricao
 
@@ -137,11 +128,11 @@ cidade+"&appid=" + weather_key+"&lang=pt" + "&units=metric"
     l_cidade['bg'] = fundo
     l_data['bg'] = fundo
     l_temp['bg'] = fundo
-    l_velocidade['bg'] = fundo
+    l_temp_celcius['bg'] = fundo
     l_descricao['bg'] = fundo
 
 
-e_local = Entry(frame_principal, width=20, justify='left',
+e_local = Entry(frame_principal, text='digite uma cidade', width=20, justify='left',
                 font=("", 14), highlightthickness=1, relief="solid")
 e_local.place(x=15, y=10)
 
@@ -161,9 +152,9 @@ l_temp = Label(frame_quadros, text="", height=1, padx=0, relief="flat",
                anchor="center", font=('Arial 45 '), bg=fundo, fg=co1)
 l_temp.place(x=10, y=100)
 
-l_velocidade = Label(frame_quadros, text="", height=1, padx=0,
-                     relief="flat", anchor="center", font=('Arial 10 '), bg=fundo, fg=co1)
-l_velocidade.place(x=10, y=212)
+l_temp_celcius = Label(frame_quadros, text="", height=1, padx=0, relief="flat",
+                       anchor="center", font=('Arial 10 bold '), bg=fundo, fg=co1)
+l_temp_celcius.place(x=85, y=110) 
 
 l_descricao = Label(frame_quadros, text="", height=1, padx=0,
                     relief="flat", anchor="center", font=('Arial 10 '), bg=fundo, fg=co1)
